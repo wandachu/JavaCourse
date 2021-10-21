@@ -9,7 +9,8 @@ public class Main {
         // Window.PANEL = new Paint();
         // Window.PANEL = new Squares();
         // Window.PANEL = new Game();
-        Window.PANEL = new PaintInk();
+        // Window.PANEL = new PaintInk();
+        Window.PANEL = new ShapeTrainer();
         Window.launch();
     }
 }

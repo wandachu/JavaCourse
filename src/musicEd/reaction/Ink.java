@@ -82,5 +82,22 @@ public class Ink implements I.Show {
                 g.drawLine(points[i - 1].tx(), points[i - 1].ty(), points[i].tx(), points[i].ty());
             }
         }
+
+        public int dist(Norm n) {
+            int res = 0;
+            for (int i = 0; i < N; i++) {
+                int dx = points[i].x - n.points[i].x;
+                int dy = points[i].y - n.points[i].y; 
+                // delata x and y are the distance between the two points between this and Norm n
+                res += dx * dx + dy * dy; // just a shortcut. no need to take sqrt for now since we don't really use the distance
+            }
+            return res;
+        }
+
+        public void blend(Norm norm, int nBlend) {
+            for (int i = 0; i < N; i++) {
+                points[i].blend(norm.points[i], nBlend);
+            }
+        }
     }// ------------------------Ink.Norm-----------------------------------
 }

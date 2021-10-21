@@ -7,6 +7,7 @@ public class UC {
     public static final int inkBufferMax = 300;
     public static final int normSampleSize = 25;
     public static final int normCoordMax = 1000;
+    public static final int noMatchedDist = 1200000;
 
     public static Color inkColor = Color.BLACK;
 }

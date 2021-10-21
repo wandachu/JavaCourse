@@ -21,6 +21,10 @@ public class G {
         public int tx() {return x * T.n / T.d + T.dx;} // multiple first then divide, as the division is a int division.
         public int ty() {return y * T.n / T.d + T.dy;}
         public void setT(V v) {set(v.tx(), v.ty());}
+        public void blend(V v, int k) {
+            set((k * x + v.x) / (k + 1), (k * y + v.y) / (k + 1));
+        }
+
         // -------------------------------G.V.Transform--------------------------
         public static class Transform {
             public int dx, dy, n, d;
