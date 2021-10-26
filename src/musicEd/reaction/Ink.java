@@ -7,7 +7,6 @@ import musicEd.graphicsLib.G.BBox;
 import java.awt.*;
 import java.util.ArrayList;
 
-
 public class Ink implements I.Show {
     public Norm norm;
     public G.VS vs;

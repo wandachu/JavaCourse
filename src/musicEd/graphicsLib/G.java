@@ -2,6 +2,7 @@ package musicEd.graphicsLib;
 
 import java.util.Random;
 import java.awt.*;
+import java.io.Serializable;
 
 public class G {
     public static Random RND = new Random();
@@ -11,7 +12,7 @@ public class G {
 
     // Helper class below:
     // vector to track x and y value (more like a point)
-    public static class V {
+    public static class V implements Serializable {
         public int x, y;
         public static Transform  T = new Transform();
         public V(int x, int y) {this.set(x, y);} //top down programming since we haven't written set() yet. bottom up is better for testing
@@ -91,7 +92,7 @@ public class G {
     }
 
     // Poly lines
-    public static class PL{
+    public static class PL implements Serializable {
         public V[] points;
 
         public PL(int count) {
