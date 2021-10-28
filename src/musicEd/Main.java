@@ -10,7 +10,8 @@ public class Main {
         // Window.PANEL = new Squares();
         // Window.PANEL = new Game();
         // Window.PANEL = new PaintInk();
-        Window.PANEL = new ShapeTrainer();
+        // Window.PANEL = new ShapeTrainer();
+        Window.PANEL = new ReactionTest();
         Window.launch();
     }
 }

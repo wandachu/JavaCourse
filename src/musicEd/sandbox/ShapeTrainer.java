@@ -78,6 +78,7 @@ public class ShapeTrainer extends Window {
                 pList = s.prototypes;            
             }
             // inkList.add(ink);
+            // to be refactored.
             if (pList.bestDist(ink.norm) < UC.noMatchedDist) {
                 proto = Shape.Prototype.List.bestMatch;
                 proto.blend(ink.norm);
