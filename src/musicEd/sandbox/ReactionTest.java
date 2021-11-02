@@ -49,7 +49,20 @@ public class ReactionTest extends Window {
         public Color c = G.rndColor();
         public boolean isCircle = false;
 
-        public Box(G.VS vs) {super("BACK"); this.vs = vs;}
+        public Box(G.VS vs) {
+            super("BACK");
+            this.vs = vs;
+
+            addReaction(new Reaction("S-S") {
+                public int bid(Gesture gest) {
+                    int x = gest.vs.xM(), y = gest.vs.yL();
+                    if (!Box.this.vs.hit(x, y)) {return UC.noBid;}  // "this" is this Reaction's Box. Read Oracle docs..
+                    return Math.abs(x - Box.this.vs.xM());
+                }
+
+                public void act(Gesture gest) {Box.this.delete();}
+            });
+        }
 
         public void show(Graphics g) {
             if (isCircle) {
