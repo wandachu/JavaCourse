@@ -22,14 +22,14 @@ public class ReactionTest extends Window {
             public void act(Gesture gest) {new Box(gest.vs);}
         });
 
-        Reaction.initialReactions.addReaction(new Reaction("S-S"){
-            public int bid(Gesture gest) {return 0;}
-            public void act(Gesture gest) {
-                Box b = new Box(gest.vs);
-                b.vs.size.x = b.vs.size.y;
-                b.isCircle = true;
-            }
-        });
+        // Reaction.initialReactions.addReaction(new Reaction("S-S"){
+        //     public int bid(Gesture gest) {return 0;}
+        //     public void act(Gesture gest) {
+        //         Box b = new Box(gest.vs);
+        //         b.vs.size.x = b.vs.size.y;
+        //         b.isCircle = true;
+        //     }
+        // });
     }
 
     public void paintComponent(Graphics g) {

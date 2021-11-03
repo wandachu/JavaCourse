@@ -120,6 +120,7 @@ public class Shape implements Serializable {
             } catch (Exception e) {
                 System.out.println("Load DB Failed.");
                 System.out.println(e);
+                res = new Database();
             }
             return res;
         }
