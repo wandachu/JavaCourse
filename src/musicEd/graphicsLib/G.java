@@ -107,7 +107,7 @@ public class G {
         public void drawN(Graphics g, int n) {
             for (int i = 1; i < n; i++) {
                 g.drawLine(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
-                g.drawOval(points[i - 1].x - 2, points[i - 1].y - 2, 4, 4); // draw ovals around each point
+                // g.drawOval(points[i - 1].x - 2, points[i - 1].y - 2, 4, 4); // draw ovals around each point
             }
         }
 

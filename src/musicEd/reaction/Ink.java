@@ -45,7 +45,7 @@ public class Ink implements I.Show {
         }
         
         public void clear() {n = 0;} // clear out the buffer
-        public void show(Graphics g) {drawN(g, n); bbox.draw(g);}
+        public void show(Graphics g) {drawN(g, n);}
 
         public void dn(int x, int y) {clear(); bbox.set(x, y); add(x, y);}
 

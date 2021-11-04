@@ -1,6 +1,7 @@
 package musicEd.reaction;
 
 import musicEd.music.I;
+import java.awt.Graphics;
 
 public abstract class Mass extends Reaction.List implements I.Show {
     public Layer layer;
@@ -18,4 +19,7 @@ public abstract class Mass extends Reaction.List implements I.Show {
 
     // Explain this later.
     public boolean equals(Object o) {return this == o;}
+
+    @Override
+    public void show(Graphics g) {}
 }
