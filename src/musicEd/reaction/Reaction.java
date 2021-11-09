@@ -33,7 +33,7 @@ public abstract class Reaction implements I.React {
     public static class List extends ArrayList<Reaction> {
         public void safeAdd(Reaction r) {if (!contains(r)) {add(r);}}
 
-        public void addReaction(Reaction r) {add(r); r.enable();}
+        public void addReaction(Reaction reaction) {add(reaction); reaction.enable();}
 
         public void removeReaction(Reaction r) {remove(r); r.disable();}
 

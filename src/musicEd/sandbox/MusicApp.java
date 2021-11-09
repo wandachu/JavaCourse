@@ -21,7 +21,7 @@ public class MusicApp extends Window {
     
     public MusicApp() {
         super("Music!", UC.windowWidth, UC.windowHeight);
-        Reaction.initialReactions.addReaction(new Reaction("E-E") {
+        Reaction.initialReactions.addReaction(new Reaction("E-E") { // Create a page. 
             public int bid(Gesture gest) {return 0;}
             public void act(Gesture gest) {new Page(gest.vs.yM()); this.disable();}
         });
