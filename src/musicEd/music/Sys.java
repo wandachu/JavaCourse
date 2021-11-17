@@ -22,8 +22,9 @@ public class Sys extends Mass {
     public void addNewStaff(int iStaff) {staffs.add(new Staff(this, iStaff));}
 
 
-    //-----------------------------Format----------------------------
+    //-----------------------------Fmt----------------------------
     public static class Fmt extends ArrayList<Staff.Fmt> {
+        public int maxH = 8; // Technically this should be calculated when you add new staff.
         public ArrayList<Integer> staffOffsets = new ArrayList<>();
 
         public void addNew(int yOff) {
@@ -44,5 +45,5 @@ public class Sys extends Mass {
             g.drawLine(x1, y, x1, y2);
             g.drawLine(x2, y, x2, y2);
         }
-    }//-----------------------------Format----------------------------    
+    }//-----------------------------Fmt----------------------------    
 }

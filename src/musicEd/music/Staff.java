@@ -24,16 +24,39 @@ public class Staff extends Mass {
             public int bid(Gesture gest) {
                 int x = gest.vs.xM(), y1 = gest.vs.yL(), y2 = gest.vs.yH();
                 G.LoHi m = Page.PAGE.xMargin;
-                if (x < m.lo || x > m.hi) return UC.noBid;
+                if (x < m.lo || (x > m.hi + UC.marginSnap)) return UC.noBid;
                 int d = Math.abs(y1 - Staff.this.yTop()) + Math.abs(y2 - Staff.this.yBot());
-                return (d < 30) ? d : UC.noBid;
+                return (d < 30) ? d + UC.marginSnap : UC.noBid; // we bias to prefer barCycle over barType
             }
 
             public void act(Gesture gest) {
-                new Bar(Staff.this.sys, gest.vs.xM());
-            } 
-
+                int rightMargin = Page.PAGE.xMargin.hi;
+                int x = gest.vs.xM();
+                if (x > rightMargin - UC.marginSnap) { // x is close to the right margin
+                    x = rightMargin;
+                }
+                new Bar(Staff.this.sys, x);
+            }
         });
+
+        addReaction(new Reaction("S-S") { // Toggle bar continues.
+            public int bid(Gesture gest) {
+                if (Staff.this.sys.iSys != 0) return UC.noBid; // only bar continues in first system.
+                int y1 = gest.vs.yL(), y2 = gest.vs.yH();
+                int iStaff = Staff.this.iStaff;
+                int iLastStaff = Page.PAGE.sysFmt.size() - 1;
+                if (iStaff == iLastStaff) return UC.noBid; // this is the last staff which cannot continue.
+                if (Math.abs(y1 - Staff.this.yBot()) > 20) return UC.noBid;
+                Staff nextStaff = Staff.this.sys.staffs.get(iStaff + 1);
+                if (Math.abs(y2 - nextStaff.yTop()) > 20) return UC.noBid;
+                return 10;
+            }
+
+            public void act(Gesture gest) {
+                Page.PAGE.sysFmt.get(Staff.this.iStaff).toggleBarContinues();
+            }
+        });
+
     }
 
     public int yTop() {return sys.yTop() + sysOff();}
@@ -43,6 +66,9 @@ public class Staff extends Mass {
     //-----------------------------Format----------------------------
     public static class Fmt{
         public int nLines = 5, H = 8; // H is half the spacing between two lines.
+        public boolean barContinues = false;
+
+        public void toggleBarContinues() {barContinues = !barContinues;}
 
         public int height() {return 2 * H * (nLines - 1);}
 

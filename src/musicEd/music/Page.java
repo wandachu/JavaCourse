@@ -23,7 +23,7 @@ public class Page extends Mass {
         PAGE = this;
         int MM = 50;
         xMargin = new G.LoHi(MM, UC.windowWidth - MM);
-        yMargin = new G.LoHi(y, UC.windowHeight - y);
+        yMargin = new G.LoHi(y, UC.windowHeight - MM);
         addNewStaffFmtToSysFmt(y);
         addNewSys();
 
