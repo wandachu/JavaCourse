@@ -12,6 +12,7 @@ public class Staff extends Mass {
     public Sys sys;
     public int iStaff; // index in the system
     public Staff.Fmt fmt;
+    public Clef initialClef = null;
 
     public Staff(Sys sys, int iStaff) {
         super("BACK");
@@ -57,11 +58,44 @@ public class Staff extends Mass {
             }
         });
 
+        addReaction(new Reaction("SE-SW") { // F clef
+            public int bid(Gesture gest) {
+                int x = gest.vs.xM(), y1 = gest.vs.yL(), y2 = gest.vs.yH();
+                G.LoHi m = Page.PAGE.xMargin;
+                if (x < m.lo || x > m.hi) return UC.noBid;
+                int d = Math.abs(y1 - Staff.this.yTop()) + Math.abs(y2 - Staff.this.yBot());
+                return (d > 50) ? UC.noBid : d;
+            }
+
+            public void act(Gesture gest) {
+                Staff.this.initialClef = Clef.F;
+            }
+        });
+
+        addReaction(new Reaction("SW-SE") { // G clef
+            public int bid(Gesture gest) {
+                int x = gest.vs.xM(), y1 = gest.vs.yL(), y2 = gest.vs.yH();
+                G.LoHi m = Page.PAGE.xMargin;
+                if (x < m.lo || x > m.hi) return UC.noBid;
+                int d = Math.abs(y1 - Staff.this.yTop()) + Math.abs(y2 - Staff.this.yBot());
+                return (d > 50) ? UC.noBid : d;
+            }
+
+            public void act(Gesture gest) {
+                Staff.this.initialClef = Clef.G;
+            }
+        });
+
     }
 
     public int yTop() {return sys.yTop() + sysOff();}
     public int yBot() {return yTop() + fmt.height();}
     public int sysOff() {return sys.page.sysFmt.staffOffsets.get(iStaff);}
+    public void show(Graphics g) {
+        if (initialClef != null) {
+            initialClef.showAt(g, Page.PAGE.xMargin.lo + 4 * fmt.H, yTop(), fmt.H);
+        }
+    }
 
     //-----------------------------Format----------------------------
     public static class Fmt{

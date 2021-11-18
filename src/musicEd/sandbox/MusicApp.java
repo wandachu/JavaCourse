@@ -32,6 +32,8 @@ public class MusicApp extends Window {
         Layer.ALL.show(g);
         g.setColor(Color.BLACK);
         Ink.BUFFER.show(g);
+        
+        
     }
 
     public void mousePressed(MouseEvent me) {Gesture.AREA.dn(me.getX(), me.getY()); repaint();}

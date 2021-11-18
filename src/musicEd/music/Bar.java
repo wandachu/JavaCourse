@@ -20,9 +20,9 @@ public class Bar extends Mass {
     0 - normal thin line. 
     1 - double thin line.
     2 - thin, fat line, i.e. fine line.
-    4-7 - fat, thin, dots, i.e. repeat to the right.
-    8-11 - dots, thin, fat, i.e. repeat to the left.
-    12 - dots, thin, fat, thin, dots, i.e. repeat both sides.
+    4-7 - fat, thin, dots, i.e. repeat to the right. (4 - 6)
+    8-11 - dots, thin, fat, i.e. repeat to the left. (8 - 10)
+    12 - dots, thin, fat, thin, dots, i.e. repeat both sides. (12 - 15)
     */
 
 
@@ -88,7 +88,7 @@ public class Bar extends Mass {
         if (barType == 0) thinBar(g, x, y1, y2);
         if (barType == 1) {thinBar(g, x, y1, y2); thinBar(g, x - H, y1, y2);}
         if (barType == 2) {fatBar(g, x - H, y1, y2, H); thinBar(g, x - 2 * H, y1, y2);}
-        if (barType > 4) {
+        if (barType >= 4) {
             fatBar(g, x - H, y1, y2, H);
             if ((barType & LEFT) != 0) {thinBar(g, x - 2 * H, y1, y2); wings(g, x - 2 * H, y1, y2, -H, H);}
             if ((barType & RIGHT) != 0) {thinBar(g, x + H, y1, y2); wings(g, x + H, y1, y2, H, H);}
@@ -120,7 +120,7 @@ public class Bar extends Mass {
 
     public void cycleType() {barType++; if (barType > 2) {barType = 0;}}
     
-    public void toggleLeft() {barType = barType^LEFT;} // switch back and forth. ^ is XOR for bit values
-    public void toggleRight() {barType = barType^RIGHT;} // switch back and forth
+    public void toggleLeft() {barType = barType^LEFT;} // switch back and forth. ^ is XOR for bit values. changed to the left digit.
+    public void toggleRight() {barType = barType^RIGHT;} // switch back and forth. changed to right digit.
 
 }
