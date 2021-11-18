@@ -20,9 +20,9 @@ public class Bar extends Mass {
     0 - normal thin line. 
     1 - double thin line.
     2 - thin, fat line, i.e. fine line.
-    4-7 - fat, thin, dots, i.e. repeat to the right. (4 - 6)
-    8-11 - dots, thin, fat, i.e. repeat to the left. (8 - 10)
-    12 - dots, thin, fat, thin, dots, i.e. repeat both sides. (12 - 15)
+    4-7 - fat, thin, dots, i.e. repeat to the right. (actually 4 - 6)
+    8-11 - dots, thin, fat, i.e. repeat to the left. (actually 8 - 10)
+    12 - dots, thin, fat, thin, dots, i.e. repeat both sides. (actually 12 - 14)
     */
 
 
