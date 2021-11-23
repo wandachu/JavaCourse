@@ -14,8 +14,9 @@ import java.awt.event.*;
 
 
 public class MusicApp extends Window {
-    static {
+    static {  // the order of the below layers matter. from back to front
         new Layer("BACK");
+        new Layer("NOTE");
         new Layer("FORE");
     }
     

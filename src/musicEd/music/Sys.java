@@ -9,11 +9,13 @@ public class Sys extends Mass {
     public ArrayList<Staff> staffs = new ArrayList<>();
     public Page page;
     public int iSys;
+    public Time.List times;
 
     public Sys(Page page, int iSys) {
         super("BACK");
         this.page = page;
         this.iSys = iSys;
+        times = new Time.List(this);
     }
 
     public int yTop() {return page.sysTop(iSys);}
@@ -21,6 +23,7 @@ public class Sys extends Mass {
 
     public void addNewStaff(int iStaff) {staffs.add(new Staff(this, iStaff));}
 
+    public Time getTime(int x) {return times.getTime(x);}
 
     //-----------------------------Fmt----------------------------
     public static class Fmt extends ArrayList<Staff.Fmt> {

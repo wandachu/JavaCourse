@@ -12,6 +12,7 @@ public class UC {
     public static final String pathToShapeDB = "/E:/JavaCourse/JavaCourse/src/musicEd/ShapeDB.dat";
     public static final int noBid = 9999;
     public static final int marginSnap = 20;
+    public static final int snapTime = 30;
     public static final String fontName = "Sinfonia";
 
     public static Color inkColor = Color.BLACK;

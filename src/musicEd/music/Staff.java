@@ -25,7 +25,7 @@ public class Staff extends Mass {
             public int bid(Gesture gest) {
                 int x = gest.vs.xM(), y1 = gest.vs.yL(), y2 = gest.vs.yH();
                 G.LoHi m = Page.PAGE.xMargin;
-                if (x < m.lo || (x > m.hi + UC.marginSnap)) return UC.noBid;
+                if (x < m.lo || (x > m.hi + UC.marginSnap)) {return UC.noBid;}
                 int d = Math.abs(y1 - Staff.this.yTop()) + Math.abs(y2 - Staff.this.yBot());
                 return (d < 30) ? d + UC.marginSnap : UC.noBid; // we bias to prefer barCycle over barType
             }
@@ -42,14 +42,14 @@ public class Staff extends Mass {
 
         addReaction(new Reaction("S-S") { // Toggle bar continues.
             public int bid(Gesture gest) {
-                if (Staff.this.sys.iSys != 0) return UC.noBid; // only bar continues in first system.
+                if (Staff.this.sys.iSys != 0) {return UC.noBid;} // only bar continues in first system.
                 int y1 = gest.vs.yL(), y2 = gest.vs.yH();
                 int iStaff = Staff.this.iStaff;
                 int iLastStaff = Page.PAGE.sysFmt.size() - 1;
-                if (iStaff == iLastStaff) return UC.noBid; // this is the last staff which cannot continue.
-                if (Math.abs(y1 - Staff.this.yBot()) > 20) return UC.noBid;
+                if (iStaff == iLastStaff) {return UC.noBid;} // this is the last staff which cannot continue.
+                if (Math.abs(y1 - Staff.this.yBot()) > 20) {return UC.noBid;}
                 Staff nextStaff = Staff.this.sys.staffs.get(iStaff + 1);
-                if (Math.abs(y2 - nextStaff.yTop()) > 20) return UC.noBid;
+                if (Math.abs(y2 - nextStaff.yTop()) > 20) {return UC.noBid;}
                 return 10;
             }
 
@@ -62,7 +62,7 @@ public class Staff extends Mass {
             public int bid(Gesture gest) {
                 int x = gest.vs.xM(), y1 = gest.vs.yL(), y2 = gest.vs.yH();
                 G.LoHi m = Page.PAGE.xMargin;
-                if (x < m.lo || x > m.hi) return UC.noBid;
+                if (x < m.lo || x > m.hi) {return UC.noBid;}
                 int d = Math.abs(y1 - Staff.this.yTop()) + Math.abs(y2 - Staff.this.yBot());
                 return (d > 50) ? UC.noBid : d;
             }
@@ -76,7 +76,7 @@ public class Staff extends Mass {
             public int bid(Gesture gest) {
                 int x = gest.vs.xM(), y1 = gest.vs.yL(), y2 = gest.vs.yH();
                 G.LoHi m = Page.PAGE.xMargin;
-                if (x < m.lo || x > m.hi) return UC.noBid;
+                if (x < m.lo || x > m.hi) {return UC.noBid;}
                 int d = Math.abs(y1 - Staff.this.yTop()) + Math.abs(y2 - Staff.this.yBot());
                 return (d > 50) ? UC.noBid : d;
             }
@@ -86,10 +86,49 @@ public class Staff extends Mass {
             }
         });
 
+        addReaction(new Reaction("SW-SW") {  // add a noteHead.
+            public int bid(Gesture gest) {
+                int x = gest.vs.xM(), y = gest.vs.yM();
+                G.LoHi m = Page.PAGE.xMargin;
+                if (x < m.lo || x > m.hi) {return UC.noBid;}
+                int H = Staff.this.H(), top = Staff.this.yTop() - H, bot = Staff.this.yBot() + H;
+                if (y < top || y > bot) {return UC.noBid;}
+                return 10; // will win the bid since no one else will bid for this.
+            }
+
+            public void act(Gesture gest) {
+                new Head(Staff.this, gest.vs.xM(), gest.vs.yM());
+            }
+        });
+
+        addReaction(new Reaction("E-S") {  // create a eight rest.
+            public int bid(Gesture gest) {
+                int x = gest.vs.xL(), y = gest.vs.yM(); // start from the low value of x
+                G.LoHi m = Page.PAGE.xMargin;
+                if (x < m.lo || x > m.hi) {return UC.noBid;}
+                int H = Staff.this.H(), top = Staff.this.yTop() - H, bot = Staff.this.yBot() + H;
+                if (y < top || y > bot) {return UC.noBid;}
+                return 10;
+            }
+
+            public void act(Gesture gest) {
+                Time t = Staff.this.sys.getTime(gest.vs.xL());
+                (new Rest(Staff.this, t)).nFlag = 1;
+            }
+        });
+
     }
 
     public int yTop() {return sys.yTop() + sysOff();}
     public int yBot() {return yTop() + fmt.height();}
+    public int H() {return fmt.H;}
+    public int yLine(int line) {return yTop() + line * H();}
+    public int lineOfY(int y) {
+        int H = H();
+        int bias = 50; // use this to bias the below number to be positive.
+        int top = yTop() - H * bias;
+        return (y - top + H / 2) / H - bias; // add H/2 to make it round vs trauncate. When dividing by negative, different computers do different things.
+    }
     public int sysOff() {return sys.page.sysFmt.staffOffsets.get(iStaff);}
     public void show(Graphics g) {
         if (initialClef != null) {
