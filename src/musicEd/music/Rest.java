@@ -27,18 +27,18 @@ public class Rest extends Duration {
             }
         });
 
-        // Homework: write the S-S reaction to reduce the Flg.
-        // addReaction(new Reaction("S-S") { // remove flag to rest.
-        //     public int bid(Gesture gest) {
-        //         int y = gest.vs.yM(), x1 = gest.vs.xL(), x2 = gest.vs.xH(), x = Rest.this.time.x;
-        //         if (x1 > x || x2 < x) {return UC.noBid;}
-        //         return Math.abs(y - Rest.this.staff.yLine(4));
-        //     }
+        // Homework: write the W-W reaction to reduce the Flg.
+        addReaction(new Reaction("W-W") { // remove flag to rest.
+            public int bid(Gesture gest) {
+                int y = gest.vs.yM(), x1 = gest.vs.xL(), x2 = gest.vs.xH(), x = Rest.this.time.x;
+                if (x1 > x || x2 < x) {return UC.noBid;}
+                return Math.abs(y - Rest.this.staff.yLine(4));
+            }
 
-        //     public void act(Gesture gest) {
-        //         Rest.this.decFlag();
-        //     }
-        // });
+            public void act(Gesture gest) {
+                Rest.this.decFlag();
+            }
+        });
     }
 
     @Override
