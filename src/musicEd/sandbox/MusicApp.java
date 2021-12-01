@@ -3,6 +3,7 @@ package musicEd.sandbox;
 import musicEd.graphicsLib.G;
 import musicEd.graphicsLib.Window;
 import musicEd.music.UC;
+import musicEd.music.Glyph;
 import musicEd.music.Page;
 import musicEd.reaction.Gesture;
 import musicEd.reaction.Ink;
@@ -33,7 +34,12 @@ public class MusicApp extends Window {
         Layer.ALL.show(g);
         g.setColor(Color.BLACK);
         Ink.BUFFER.show(g);
-        
+        // if (Page.PAGE != null) {
+        //     int H = 32;
+        //     Glyph.HEAD_QU.showAt(g, H, 200, Page.PAGE.yMargin.lo + 4 * H);
+        //     g.setColor(Color.RED);
+        //     g.drawRect(200, Page.PAGE.yMargin.lo + 3 * H, 24 * H / 10, 2 * H);
+        // }
         
     }
 

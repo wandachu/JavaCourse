@@ -14,6 +14,8 @@ public class UC {
     public static final int marginSnap = 20;
     public static final int snapTime = 30;
     public static final String fontName = "Sinfonia";
+    public static final int restAugDotOffset = 30;
+    public static final int augDotSpacing = 12;
 
     public static Color inkColor = Color.BLACK;
 
