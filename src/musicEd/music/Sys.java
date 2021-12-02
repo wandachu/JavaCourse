@@ -7,6 +7,7 @@ import musicEd.reaction.Mass;
 
 public class Sys extends Mass {
     public ArrayList<Staff> staffs = new ArrayList<>();
+    public Stem.List stems = new Stem.List();
     public Page page;
     public int iSys;
     public Time.List times;
@@ -22,7 +23,6 @@ public class Sys extends Mass {
     public int yBot() {return staffs.get(staffs.size() - 1).yBot();}
 
     public void addNewStaff(int iStaff) {staffs.add(new Staff(this, iStaff));}
-
     public Time getTime(int x) {return times.getTime(x);}
 
     //-----------------------------Fmt----------------------------

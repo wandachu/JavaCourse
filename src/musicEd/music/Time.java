@@ -29,6 +29,7 @@ public class Time {
             System.out.println("Empty headlist after stemming!");
         } else {
             s.setWrongSides();
+            s.staff.sys.stems.add(s); // add the stem to the sys's list.
         }
     }
 

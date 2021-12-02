@@ -29,6 +29,8 @@ public class Glyph{
     public static Glyph FLAG3U = new Glyph((char)61492, 16, 0, -1);
     public static Glyph FLAG4D = new Glyph((char)61493, 16, 0, 8);
     public static Glyph FLAG4U = new Glyph((char)61494, 16, 0, -3);
+    public static Glyph[] upFlags = {FLAG1U, FLAG2U, FLAG3U, FLAG4U};
+    public static Glyph[] dnFlags = {FLAG1D, FLAG2D, FLAG3D, FLAG4D};
     
     public static Glyph REST_W = new Glyph((char)61499, 16, 0, 6);
     public static Glyph REST_H = new Glyph((char)61499, 16, 0, 7);
@@ -63,4 +65,6 @@ public class Glyph{
       // g.drawRect(x, y, H, H);
       g.setFont(f); // restore old font
     }
+
+
   }

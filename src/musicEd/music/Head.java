@@ -6,8 +6,9 @@ import musicEd.reaction.Reaction;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.awt.Color;
 
-public class Head extends Mass {
+public class Head extends Mass implements Comparable<Head> {
     public Staff staff;
     public int line;  // line is the y coordinate regarding which line (more useful than just y)
     public Time time;
@@ -21,6 +22,8 @@ public class Head extends Mass {
         time = staff.sys.getTime(x);
         line = staff.lineOfY(y);
         time.heads.add(this);
+
+        // Need to change capital method name to lower case.....
 
         // add reactions below
         addReaction(new Reaction("S-S") { // stem or unstem
@@ -46,8 +49,22 @@ public class Head extends Mass {
                 } else {
                     t.unStemHeads(y1, y2);
                 }
+            }            
+        });
+
+        addReaction(new Reaction("DOT") { // Add dot
+            public int bid(Gesture gest) {
+                int xH = Head.this.X(), yH = Head.this.Y(), h = Head.this.staff.H(), w = Head.this.W();
+                int x = gest.vs.xM(), y = gest.vs.yM();
+                if (x < xH || x > xH + 2 * w || y < yH - h || y > yH + h) {return UC.noBid;}
+                return Math.abs(xH + w - x) + Math.abs(yH - y);
             }
-            
+
+            public void act(Gesture gest) {
+                if (Head.this.stem != null) {
+                    Head.this.stem.cycleDot();
+                }
+            }
         });
     }
 
@@ -83,11 +100,25 @@ public class Head extends Mass {
     public void show(Graphics g) {
         int H = staff.H();
         Glyph glyph = forcedGlyph != null ? forcedGlyph : normalGlyph();
-        glyph.showAt(g, H, time.x, staff.yLine(line));
+        glyph.showAt(g, H, X(), staff.yLine(line));
+        if (stem != null) {
+            int off = UC.restAugDotOffset, sp = UC.augDotSpacing;
+            for (int i = 0; i < stem.nDot; i++) {
+                g.fillOval(time.x + off + i * sp, Y() - 3 * H / 2, 2 * H / 3, 2 * H / 3);
+            }
+        }
     }
 
     public Glyph normalGlyph() {
-        return Glyph.HEAD_QU; // will fix this later.
+        if (stem == null) {return Glyph.HEAD_QU;}
+        if (stem.nFlag == -1) {return Glyph.HEAD_HALF;}
+        if (stem.nFlag == -2) {return Glyph.HEAD_WH;}
+        return Glyph.HEAD_QU; // normally this should never be reached. just for compiler
+    }
+
+    @Override
+    public int compareTo(Head h) {
+        return (staff.iStaff != h.staff.iStaff) ? staff.iStaff - h.staff.iStaff : line - h.line;
     }
 
     //------------------------------List------------------------------------
