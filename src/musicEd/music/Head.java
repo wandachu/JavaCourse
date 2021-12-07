@@ -6,7 +6,7 @@ import musicEd.reaction.Reaction;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.awt.Color;
+// import java.awt.Color;
 
 public class Head extends Mass implements Comparable<Head> {
     public Staff staff;

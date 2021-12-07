@@ -3,7 +3,8 @@ package musicEd.sandbox;
 import musicEd.graphicsLib.G;
 import musicEd.graphicsLib.Window;
 import musicEd.music.UC;
-import musicEd.music.Glyph;
+// import musicEd.music.Beam;
+// import musicEd.music.Glyph;
 import musicEd.music.Page;
 import musicEd.reaction.Gesture;
 import musicEd.reaction.Ink;
@@ -29,11 +30,24 @@ public class MusicApp extends Window {
         });
     }
 
+    // test for polygons
+    // public static int[] xPoly = {100, 200, 200, 100};
+    // public static int[] yPoly = {50, 70, 80, 60};
+    // public static Polygon poly = new Polygon(xPoly, yPoly, 4);
+
     public void paintComponent(Graphics g) {
         G.fillBackground(g);
         Layer.ALL.show(g);
         g.setColor(Color.BLACK);
         Ink.BUFFER.show(g);
+        // int h = 8, x1 = 100, x2 = 200;
+        // Beam.setMasterBeam(x1, 100 + G.rnd(100), x2, 100 + G.rnd(100));
+        // g.drawLine(0, Beam.my1, x1, Beam.my1);
+        // Beam.drawBeamsStack(g, 0, 1, x1, x2, h);
+        // g.setColor(Color.ORANGE);
+        // Beam.drawBeamsStack(g, 1, 3, x1 + 10, x2 - 10, h);
+        // g.fillPolygon(Beam.poly);
+        // poly.ypoints[3]++; //that cooridinates gets bigger and bigger.
         // if (Page.PAGE != null) {
         //     int H = 32;
         //     Glyph.HEAD_QU.showAt(g, H, 200, Page.PAGE.yMargin.lo + 4 * H);

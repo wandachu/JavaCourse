@@ -7,7 +7,7 @@ import java.util.Collections;
 import musicEd.reaction.Gesture;
 import musicEd.reaction.Reaction;
 
-public class Stem extends Duration {
+public class Stem extends Duration implements Comparable<Stem> {
     public Staff staff;
     public Head.List heads = new Head.List();
     public boolean isUp = true;
@@ -105,9 +105,12 @@ public class Stem extends Duration {
             ph = nh;
         }
     }
+
+    @Override
+    public int compareTo(Stem s) {return this.X() - s.X();}
     
     //-------------------------------List---------------------------------
     public static class List extends ArrayList<Stem> {
-        
+        public void sort() {Collections.sort(this);}
     }
 }
