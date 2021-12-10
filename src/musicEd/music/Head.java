@@ -6,7 +6,7 @@ import musicEd.reaction.Reaction;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-// import java.awt.Color;
+import java.awt.Color;
 
 public class Head extends Mass implements Comparable<Head> {
     public Staff staff;
@@ -45,7 +45,8 @@ public class Head extends Mass implements Comparable<Head> {
                 Time t = Head.this.time;
                 boolean up = (x > t.x + W / 2);
                 if (Head.this.stem == null) {
-                    t.stemHeads(staff, up, y1, y2);
+                    // t.stemHeads(staff, up, y1, y2);
+                    Stem.getStem(staff, time, y1, y2, up);
                 } else {
                     t.unStemHeads(y1, y2);
                 }
@@ -98,6 +99,7 @@ public class Head extends Mass implements Comparable<Head> {
     }
 
     public void show(Graphics g) {
+        g.setColor(Color.BLACK);
         int H = staff.H();
         Glyph glyph = forcedGlyph != null ? forcedGlyph : normalGlyph();
         glyph.showAt(g, H, X(), staff.yLine(line));
@@ -117,9 +119,7 @@ public class Head extends Mass implements Comparable<Head> {
     }
 
     @Override
-    public int compareTo(Head h) {
-        return (staff.iStaff != h.staff.iStaff) ? staff.iStaff - h.staff.iStaff : line - h.line;
-    }
+    public int compareTo(Head h) {return (staff.iStaff != h.staff.iStaff) ? staff.iStaff - h.staff.iStaff : line - h.line;}
 
     //------------------------------List------------------------------------
     public static class List extends ArrayList<Head> {}

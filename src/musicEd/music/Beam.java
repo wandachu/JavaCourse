@@ -3,6 +3,7 @@ package musicEd.music;
 import musicEd.reaction.Mass;
 import java.awt.*;
 
+
 public class Beam extends Mass {
     public static Polygon poly;
     static {
@@ -32,18 +33,18 @@ public class Beam extends Mass {
             stems.sort();
         }
     }
-    public void setMasterBeam() {mx1 = first().X(); my1 = first().yBeamEnd(); mx2 = last().X(); my2 = last().yBeamEnd();}
+    public void setMasterBeam() {mx1 = first().x(); my1 = first().yBeamEnd(); mx2 = last().x(); my2 = last().yBeamEnd();}
     public void show(Graphics g) {g.setColor(Color.BLACK); drawBeamGroup(g);}
     private void drawBeamGroup(Graphics g) {
         setMasterBeam();
         Stem firstStem = first();
         int H = firstStem.staff.H(), sH = firstStem.isUp ? H : -H; // sH is signed H needed for BeamStack.
         int nPrev = 0, nCurr = firstStem.nFlag, nNext = stems.get(1).nFlag; // flag counts of previous, current, and next stem.
-        int pX, cX = firstStem.X(); // x location of the previous and current stem.
+        int pX, cX = firstStem.x(); // x location of the previous and current stem.
         int bX = cX + 3 * H; // forward leaning beamLet
-        if (nCurr > nNext) {drawBeamsStack(g, nNext, nCurr, cX, bX, sH);}
+        if (nCurr > nNext) {drawBeamsStack(g, nNext, nCurr, cX, bX, sH);} // beamLet on first stem.
         for (int curr = 1; curr < stems.size(); curr++) {
-            Stem sCurr = stems.get(curr); pX = cX; cX = sCurr.X();
+            Stem sCurr = stems.get(curr); pX = cX; cX = sCurr.x();
             nPrev = nCurr; nCurr = nNext; nNext = (curr < stems.size() - 1) ? stems.get(curr + 1).nFlag : 0;
             int nBack = Math.min(nPrev, nCurr);
             drawBeamsStack(g, 0, nBack, pX, cX, sH); // beams back to previous stem

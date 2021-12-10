@@ -3,7 +3,9 @@ package musicEd.music;
 import java.util.ArrayList;
 import java.awt.Graphics;
 
+import musicEd.reaction.Gesture;
 import musicEd.reaction.Mass;
+import musicEd.reaction.Reaction;
 
 public class Sys extends Mass {
     public ArrayList<Staff> staffs = new ArrayList<>();
@@ -17,8 +19,39 @@ public class Sys extends Mass {
         this.page = page;
         this.iSys = iSys;
         times = new Time.List(this);
+    
+        //Reactions below
+        addReaction(new Reaction("E-E") { // create beams or add more beams to BeamGroup
+            public int bid(Gesture gest) {
+                int x1 = gest.vs.xL(), y1 = gest.vs.yL(), x2 = gest.vs.xH(), y2 = gest.vs.yH();
+                if (Sys.this.rejectStemRange(y1, y2)) {return UC.noBid;}
+                Stem.List temp = Sys.this.stems.allIntersectors(x1, y1, x2, y2);
+                if (temp.size() < 2) {return UC.noBid;}
+                Beam b = temp.get(0).beam;
+                for (Stem s : temp) {if (s.beam != b) {return UC.noBid;}}
+                if (b == null && temp.size() != 2) {return UC.noBid;} // must cross two stems
+                if (b == null && (temp.get(0).nFlag != 0 || temp.get(1).nFlag != 0)) {return UC.noBid;} // don't want anything already has flags on.
+                return 50;
+            }
+
+            public void act(Gesture gest) {
+                int x1 = gest.vs.xL(), y1 = gest.vs.yL(), x2 = gest.vs.xH(), y2 = gest.vs.yH();
+                Stem.List temp = Sys.this.stems.allIntersectors(x1, y1, x2, y2);
+                Beam b = temp.get(0).beam;
+                if (b == null) {
+                    new Beam(temp.get(0), temp.get(1));
+                } else {
+                    for (Stem s : temp) {s.incFlag();}
+                }
+            }            
+        });
+    
     }
 
+    public boolean rejectStemRange(int y1, int y2) {
+        int gap = page.sysGap / 2;
+        return (y2 < (yTop() - gap) || y1 > (yBot() + gap));
+    }
     public int yTop() {return page.sysTop(iSys);}
     public int yBot() {return staffs.get(staffs.size() - 1).yBot();}
 

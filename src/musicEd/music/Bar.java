@@ -8,6 +8,7 @@ import musicEd.reaction.Reaction;
 import java.awt.Graphics;
 import java.awt.Color;
 
+
 public class Bar extends Mass {
     public Sys sys;
     public int x;
@@ -32,7 +33,6 @@ public class Bar extends Mass {
         this.x = x;
 
         addReaction(new Reaction("S-S") {
-            @Override
             public int bid(Gesture gest) {
                 int x = gest.vs.xM();
                 if (Math.abs(x - Bar.this.x) > 2 * UC.marginSnap) return UC.noBid;
@@ -45,7 +45,6 @@ public class Bar extends Mass {
                 return (d > UC.marginSnap) ? UC.noBid : d;
             }
 
-            @Override
             public void act(Gesture gest) {Bar.this.cycleType();}            
         });
         
@@ -65,7 +64,6 @@ public class Bar extends Mass {
         });
     }
 
-    @Override
     public void show(Graphics g) {
         g.setColor(Color.BLACK);
         //int sysTop = sys.yTop();
@@ -118,8 +116,7 @@ public class Bar extends Mass {
         }
     }
 
-    public void cycleType() {barType++; if (barType > 2) {barType = 0;}}
-    
+    public void cycleType() {barType++; if (barType > 2) {barType = 0;}}    
     public void toggleLeft() {barType = barType^LEFT;} // switch back and forth. ^ is XOR for bit values. changed to the left digit.
     public void toggleRight() {barType = barType^RIGHT;} // switch back and forth. changed to right digit.
 
