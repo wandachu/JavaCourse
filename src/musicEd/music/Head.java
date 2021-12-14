@@ -67,6 +67,21 @@ public class Head extends Mass implements Comparable<Head> {
                 }
             }
         });
+
+        addReaction(new Reaction("S-N") { // Delete head
+            public int bid(Gesture gest) {
+                int w2 = 2 * W(), h = staff.H(), x = gest.vs.xM();
+                int xHead = X(), dX = Math.abs(x - xHead);
+                if (dX > w2) {return UC.noBid;}
+                int y = gest.vs.yL(), yHead = Y(), dY = Math.abs(y - yHead);
+                if (dY > 2 * h) {return UC.noBid;}
+                return dX + dY;
+            }
+
+            public void act(Gesture gest) {
+                Head.this.deleteHead();
+            }
+        });
     }
 
     public int W() {return 24 * staff.H() / 10;}
@@ -79,14 +94,21 @@ public class Head extends Mass implements Comparable<Head> {
         return res;
     }
 
-    public void delete() { // stub
+    // public void delete() { // stub
+    //     time.heads.remove(this);
+    // }
+
+    public void deleteHead() {
+        unStem();
         time.heads.remove(this);
+        deleteMass();
     }
 
     public void unStem() {
         if (stem != null) {
             stem.heads.remove(this); // get off the old stem
             if (stem.heads.size() == 0) {stem.deleteStem();}
+            else {stem.setWrongSides();}
             stem = null;
             wrongSide = false;
         }
@@ -102,7 +124,9 @@ public class Head extends Mass implements Comparable<Head> {
         g.setColor(Color.BLACK);
         int H = staff.H();
         Glyph glyph = forcedGlyph != null ? forcedGlyph : normalGlyph();
+        g.setColor(stem == null ? Color.ORANGE : Color.BLACK); // color heads with no stems to orange
         glyph.showAt(g, H, X(), staff.yLine(line));
+        g.setColor(Color.BLACK);
         if (stem != null) {
             int off = UC.restAugDotOffset, sp = UC.augDotSpacing;
             for (int i = 0; i < stem.nDot; i++) {

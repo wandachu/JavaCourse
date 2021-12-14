@@ -1,5 +1,6 @@
 package musicEd.reaction;
 
+import musicEd.graphicsLib.G;
 import musicEd.music.I;
 import java.awt.Graphics;
 
@@ -17,9 +18,9 @@ public abstract class Mass extends Reaction.List implements I.Show {
 
     public void deleteMass() {clearAll(); layer.remove(this);}
 
-    // Explain this later.
-    public boolean equals(Object o) {return this == o;}
+    private int hashCode = G.rnd(100000000);
+    public int hashCode() {return hashCode;}
+    public boolean equals(Object o) {return this == o;} // somewhere(might be ArrayList) this was override not to be the default function, so we changed it back.
 
-    @Override
     public void show(Graphics g) {}
 }

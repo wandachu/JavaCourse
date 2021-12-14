@@ -35,6 +35,14 @@ public class Beam extends Mass {
     }
     public void setMasterBeam() {mx1 = first().x(); my1 = first().yBeamEnd(); mx2 = last().x(); my2 = last().yBeamEnd();}
     public void show(Graphics g) {g.setColor(Color.BLACK); drawBeamGroup(g);}
+    public void removeStem(Stem s) {
+        if (s == first() || s == last()) {
+            deleteBeam();
+        } else {
+            stems.remove(s);
+            stems.sort();
+        } 
+    }
     private void drawBeamGroup(Graphics g) {
         setMasterBeam();
         Stem firstStem = first();

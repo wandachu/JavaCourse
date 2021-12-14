@@ -70,10 +70,12 @@ public class Stem extends Duration implements Comparable<Stem> {
     public Head firstHead() {return heads.get(isUp ? heads.size() - 1 : 0);}
     public Head lastHead() {return heads.get(isUp ? 0 : heads.size() - 1);}
     public int yFirstHead() {
+        if (heads.size() == 0) {return 200;} // guard against empty stems by picking a wrong location to make it stand out.
         Head h = firstHead();
         return h.staff.yLine(h.line);
     }
     public int yBeamEnd() {
+        if (heads.size() == 0) {return 100;} // guard against empty stems by picking a wrong location to make it stand out.
         if (beam != null && beam.stems.size() > 1 && beam.first() != this && beam.last() != this) { // test if this is an internal stem
             Stem b = beam.first(), e = beam.last(); // beginning and ending stem
             return Beam.yOfX(x(), b.x(), b.yBeamEnd(), e.x(), e.yBeamEnd());
@@ -91,11 +93,22 @@ public class Stem extends Duration implements Comparable<Stem> {
     public int yLow() {return isUp ? yBeamEnd() : yFirstHead();}
     public int yHigh() {return isUp ? yFirstHead() : yBeamEnd();}
     public int x() {
+        if (heads.size() == 0) {return 100;} // guard against empty stems by picking a wrong location to make it stand out.
         Head h = firstHead();
         return h.time.x + (isUp ? h.W() : 0);
     }
 
-    public void deleteStem() {this.staff.sys.stems.remove(this); deleteMass();}
+    public void deleteStem() {
+        if (heads.size() != 0) { // we shouldn't delete a stem if there are heads on it.
+            System.out.println("ERR - delete stem with heads on it!"); // should never happen
+        }
+        this.staff.sys.stems.remove(this);
+        if (beam != null) {
+            beam.removeStem(this);
+        }
+        deleteMass();
+    }
+
     public void setWrongSides() {
         Collections.sort(heads);
         int i, last, next;
